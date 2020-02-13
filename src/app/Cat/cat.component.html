@@ -1,0 +1,188 @@
+<div style="width: 580px; overflow:hidden;">
+  <div class="container-cat">
+    <mat-tab-group mat-align-tabs="center" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab label="Cats list">
+        <mat-accordion multi="true">
+          <mat-expansion-panel hideToggle >
+            <mat-expansion-panel-header>
+              <mat-panel-title class="title">
+                <mat-icon>add</mat-icon>
+                Add new cat
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row-panel">
+              <div>
+                <mat-form-field>
+                  <mat-label class="label">Name</mat-label>
+                  <input matInput type="text" [(ngModel)]="cat.name">
+                  <button mat-button *ngIf="cat.name" matSuffix mat-icon-button aria-label="Clear" (click)="cat.name=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label class="label">Owner</mat-label>
+                  <input matInput type="text" [(ngModel)]="cat.owner">
+                  <button mat-button *ngIf="cat.owner" matSuffix mat-icon-button aria-label="Clear" (click)="cat.owner=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label class="label">Age</mat-label>
+                  <input matInput type="number" [(ngModel)]="cat.age">
+                  <button mat-button *ngIf="cat.age" matSuffix mat-icon-button aria-label="Clear" (click)="cat.age=null">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label class="label">Species</mat-label>
+                  <input matInput type="text" [(ngModel)]="cat.species">
+                  <button mat-button *ngIf="cat.species" matSuffix mat-icon-button aria-label="Clear" (click)="cat.species=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label class="label">Latitude</mat-label>
+                  <input matInput type="number" [(ngModel)]="cat.latitude">
+                  <button mat-button *ngIf="cat.latitude" matSuffix mat-icon-button aria-label="Clear" (click)="cat.latitude=null">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label class="label">Longitude</mat-label>
+                  <input matInput type="number" [(ngModel)]="cat.longitude">
+                  <button mat-button *ngIf="cat.longitude" matSuffix mat-icon-button aria-label="Clear" (click)="cat.longitude=null">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-action-row>
+              <button class="button" mat-button (click)="addCat(cat.age, cat.name, cat.owner, cat.species, cat.latitude, cat.longitude)"> <mat-icon>add</mat-icon> Add cat</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngFor="let cat of dataService.cats">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="title">
+                {{cat.name}}
+              </mat-panel-title>
+              <mat-panel-description class="title">
+                {{cat.species}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="!editMode">
+              <p><i class="material-icons">location_on</i> Dislocation: <span>{{cat.longitude}}, {{cat.latitude}}</span></p>
+              <p><mat-icon>person</mat-icon> Owner: <span>{{cat.owner}}</span></p>
+              <p><i class="material-icons">date_range</i> Age: <span>{{cat.age}}</span></p>
+            </div>
+            <div *ngIf="editMode">
+              <div class="row-panel">
+                <div>
+                  <mat-form-field>
+                    <mat-label class="label">Name</mat-label>
+                    <input matInput type="text" [(ngModel)]="cat.name" >
+                    <button mat-button *ngIf="cat.name" matSuffix mat-icon-button aria-label="Clear" (click)="cat.name=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label class="label">Owner</mat-label>
+                    <input matInput type="text" [(ngModel)]="cat.owner">
+                    <button mat-button *ngIf="cat.owner" matSuffix mat-icon-button aria-label="Clear" (click)="cat.owner=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label class="label">Age</mat-label>
+                    <input matInput type="number" [(ngModel)]="cat.age">
+                    <button mat-button *ngIf="cat.age" matSuffix mat-icon-button aria-label="Clear" (click)="cat.age=null">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-label class="label">Species</mat-label>
+                    <input matInput type="text" [(ngModel)]="cat.species">
+                    <button mat-button *ngIf="cat.species" matSuffix mat-icon-button aria-label="Clear" (click)="cat.species=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label class="label">Latitude</mat-label>
+                    <input matInput type="number" [(ngModel)]="cat.latitude">
+                    <button mat-button *ngIf="cat.latitude" matSuffix mat-icon-button aria-label="Clear" (click)="cat.latitude=null">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <mat-form-field >
+                    <mat-label>Longitude</mat-label>
+                    <input matInput type="number" [(ngModel)]="cat.longitude">
+                    <button mat-button *ngIf="cat.longitude" matSuffix mat-icon-button aria-label="Clear" (click)="cat.longitude=null">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <mat-action-row>
+              <button class="button" mat-button *ngIf="!editMode" (click)="editMode = true">Edit cat <mat-icon>edit</mat-icon></button>
+              <button class="button" mat-button *ngIf="editMode" (click)="editCat(cat.id, cat.age, cat.name, cat.owner, cat.species, cat.latitude, cat.longitude); editMode = false; ">Save <mat-icon>save</mat-icon></button>
+              <button class="button" mat-button *ngIf="editMode" (click)="editMode = false">Close <mat-icon>close</mat-icon></button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-tab>
+
+      <mat-tab label="Filters">
+        <div class="card">
+          <div class="find"> Finding cat by name</div>
+            <div class="row-panel">
+              <mat-form-field class="label">
+                <mat-label class="label">Name</mat-label>
+                <input matInput type="text" [(ngModel)]="nameToFind">
+                <button mat-button *ngIf="nameToFind" matSuffix mat-icon-button aria-label="Clear" (click)="nameToFind=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+              <button class="button" mat-button (click)="findCatByName(nameToFind)">Find cat <mat-icon>search</mat-icon></button>
+              <button class="button" mat-button (click)="reset()"> Reset <mat-icon>cancel</mat-icon></button>
+            </div>
+        </div>
+        <div class="card">
+          <div class="find"> Finding cat by breed</div>
+          <div class="row-panel">
+            <mat-form-field class="label">
+              <mat-label class="label">Breed</mat-label>
+              <input matInput type="text" [(ngModel)]="breedToFind">
+              <button mat-button *ngIf="breedToFind" matSuffix mat-icon-button aria-label="Clear" (click)="breedToFind=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <button class="button" mat-button (click)="findCatByBreed(breedToFind)">Find cat <mat-icon>search</mat-icon></button>
+            <button class="button" mat-button (click)="reset()"> Reset <mat-icon>cancel</mat-icon></button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="find"> Finding cat by age</div>
+          <div class="label" style="padding-left: 30px"> You will be shown cats from 0 to:</div>
+          <div class="row-panel age">
+            <mat-slider min="0" max="15" step="0.2" value="3.5" thumbLabel="true" (change)="ageToFind = $event.value"></mat-slider>
+            <button class="button" mat-button (click)="findCatByAge(ageToFind)">Find cat <mat-icon>search</mat-icon></button>
+            <button class="button" mat-button (click)="reset()"> Reset <mat-icon>cancel</mat-icon></button>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
